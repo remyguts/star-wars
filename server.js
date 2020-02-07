@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 // video walkthrough - https://youtu.be/ygk-kNstqK0?list=PLgJ8UgkiorCmI_wKKVt5FlkTG63sQF6rr
 
@@ -6,15 +6,15 @@
 // Dependencies
 // ===========================================================
 
-const express = require('express');
-const path = require('path');
+const express = require("express");
+const path = require("path");
 
 // =============================================================
 // Setup
 // =============================================================
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT;
 
 // Sets up the Express app to handle data parsing
 app.use(express.urlencoded({ extended: true }));
@@ -26,23 +26,23 @@ app.use(express.json());
 
 let characters = [
   {
-    routeName: 'yoda',
-    name: 'Yoda',
-    role: 'Jedi Master',
+    routeName: "yoda",
+    name: "Yoda",
+    role: "Jedi Master",
     age: 900,
     midichlorianCount: 17700
   },
   {
-    routeName: 'darthmaul',
-    name: 'Darth Maul',
-    role: 'Sith Lord',
+    routeName: "darthmaul",
+    name: "Darth Maul",
+    role: "Sith Lord",
     age: 35,
     midichlorianCount: 12000
   },
   {
-    routeName: 'obiwankenobi',
-    name: 'Obi Wan Kenobi',
-    role: 'Jedi Master',
+    routeName: "obiwankenobi",
+    name: "Obi Wan Kenobi",
+    role: "Jedi Master",
     age: 55,
     midichlorianCount: 1350
   }
@@ -53,15 +53,15 @@ let characters = [
 // =============================================================
 
 // Basic route that sends the user first to the AJAX Page
-app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'view.html')));
+app.get("/", (req, res) => res.sendFile(path.join(__dirname, "view.html")));
 
-app.get('/add', (req, res) => res.sendFile(path.join(__dirname, 'add.html')));
+app.get("/add", (req, res) => res.sendFile(path.join(__dirname, "add.html")));
 
 // Displays all characters
-app.get('/api/characters', (req, res) => res.json(characters));
+app.get("/api/characters", (req, res) => res.json(characters));
 
 // Displays a single character or returns false
-app.get('/api/characters/:character', (req, res) => {
+app.get("/api/characters/:character", (req, res) => {
   const chosen = req.params.character;
 
   console.log(chosen);
@@ -76,14 +76,14 @@ app.get('/api/characters/:character', (req, res) => {
 });
 
 // Create New Characters - takes in JSON input
-app.post('/api/characters', (req, res) => {
+app.post("/api/characters", (req, res) => {
   // req.body hosts is equal to the JSON post sent from the user
   // This works because of our body parsing middleware
   const newCharacter = req.body;
 
   // Using a RegEx Pattern to remove spaces from newCharacter
   // You can read more about RegEx Patterns later https://www.regexbuddy.com/regex.html
-  newCharacter.routeName = newCharacter.name.replace(/\s+/g, '').toLowerCase();
+  newCharacter.routeName = newCharacter.name.replace(/\s+/g, "").toLowerCase();
 
   console.log(newCharacter);
 
@@ -96,4 +96,4 @@ app.post('/api/characters', (req, res) => {
 // Listener
 // =============================================================
 
-app.listen(PORT, () => console.log('App listening on PORT ' + PORT));
+app.listen(PORT, () => console.log("App listening on PORT " + PORT));
